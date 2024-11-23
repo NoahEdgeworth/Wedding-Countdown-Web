@@ -37,13 +37,13 @@ const PhotoGallery = () => {
   const photos = [
     {
       id: 1,
-      src: "/images/IMG_8444.jpeg",
+      src: "/Wedding-Countdown-Web/images/IMG_8444.jpeg",
       caption: "The Proposal",
       date: "July 2024"
     },
     {
       id: 2,
-      src: "/images/Facetune_15-07-2024-08-14-17.jpeg",
+      src: "/Wedding-Countdown-Web/images/Facetune_15-07-2024-08-14-17.jpeg",
       caption: "Beach Pics",
       date: "July 2024"
     },
@@ -255,7 +255,7 @@ export default function WeddingCountdown() {
     { id: 'home', label: 'Home', icon: <Home className="w-4 h-4" /> },
     { id: 'gallery', label: 'Our Story', icon: <Camera className="w-4 h-4" /> },
     { id: 'schedule', label: 'Schedule', icon: <Clock3 className="w-4 h-4" /> },
-    { id: 'party', label: 'Wedding Party', icon: <Users className="w-4 h-4" /> },
+    { id: 'party', label: 'Love Letters', icon: <Users className="w-4 h-4" /> },
     { id: 'venue', label: 'Venue', icon: <Map className="w-4 h-4" /> }
   ];
 
