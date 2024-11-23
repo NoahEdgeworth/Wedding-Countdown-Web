@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Calendar, Clock, Gift, Home, Camera, Clock3, Users, Map } from 'lucide-react';
+import { Heart, Calendar, Clock, Gift, Home, Camera, Clock3, Users, Map, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 
 const WillowPattern = () => (
   <div className="fixed inset-0 w-full h-full opacity-10 pointer-events-none">
@@ -32,93 +32,137 @@ const TimeUnit = ({ value, label }) => (
 );
 
 const PhotoGallery = () => {
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
   
   const photos = [
     {
       id: 1,
-      src: "/Wedding-Countdown-Web/images/IMG_8444.jpeg",
+      src: "/images/IMG_8444.jpeg",
       caption: "The Proposal",
       date: "July 2024"
     },
     {
       id: 2,
-      src: "/Wedding-Countdown-Web/images/Facetune_15-07-2024-08-14-17.jpeg",
+      src: "/images/Facetune_15-07-2024-08-14-17.jpeg",
       caption: "Beach Pics",
       date: "July 2024"
     },
     {
       id: 3,
-      src: "images/IMG_8207.jpeg",
+      src: "/images/IMG_8207.jpeg",
       caption: "Braves Game",
       date: "September 2022"
     },
     {
       id: 4,
-      src: "images/IMG_3856.jpeg",
+      src: "/images/IMG_3856.jpeg",
       caption: "Out on the Town",
       date: "October 2022"
     },
     {
       id: 5,
-      src: "images/IMG_8010.jpeg",
+      src: "/images/IMG_8010.jpeg",
       caption: "Jackpot",
       date: "December 2023"
     },
     {
       id: 6,
-      src: "images/IMG_5836.jpeg",
+      src: "/images/IMG_5836.jpeg",
       caption: "Pro Pics",
       date: "February 2023"
     }
   ];
+
+  useEffect(() => {
+    let interval;
+    if (isPlaying) {
+      interval = setInterval(() => {
+        setCurrentIndex((prevIndex) => 
+          prevIndex === photos.length - 1 ? 0 : prevIndex + 1
+        );
+      }, 5000);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, photos.length]);
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === photos.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? photos.length - 1 : prevIndex - 1
+    );
+  };
+
+  const togglePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
 
   return (
     <div className="mt-8">
       <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-6 border-2 border-blue-200">
         <h2 className="text-2xl text-blue-800 mb-6 text-center font-bold">Our Journey</h2>
         
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {photos.map((photo) => (
-            <div 
-              key={photo.id}
-              className="relative group cursor-pointer overflow-hidden rounded-lg"
-              onClick={() => setSelectedPhoto(photo)}
-            >
-              <img
-                src={photo.src}
-                alt={photo.caption}
-                className="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-blue-900/0 group-hover:bg-blue-900/40 transition-all duration-300">
-                <div className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                  <p className="font-semibold text-sm">{photo.caption}</p>
-                  <p className="text-xs opacity-80">{photo.date}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {selectedPhoto && (
-        <div 
-          className="fixed inset-0 bg-blue-900/90 flex items-center justify-center z-50 p-4"
-          onClick={() => setSelectedPhoto(null)}
-        >
-          <div className="max-w-4xl w-full bg-white rounded-lg overflow-hidden shadow-2xl">
+        <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg">
+          {/* Main Image */}
+          <div className="absolute inset-0 flex items-center justify-center">
             <img
-              src={selectedPhoto.src}
-              alt={selectedPhoto.caption}
-              className="w-full h-auto"
+              src={photos[currentIndex].src}
+              alt={photos[currentIndex].caption}
+              className="w-full h-full object-contain object-center"
+              // style={{maxHeight: '600px'}}
             />
-            <div className="p-4 bg-white">
-              <h3 className="text-xl font-semibold text-blue-800">{selectedPhoto.caption}</h3>
-              <p className="text-blue-600">{selectedPhoto.date}</p>
+            
+            {/* Caption Overlay */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6 text-white">
+              <h3 className="text-xl font-semibold">{photos[currentIndex].caption}</h3>
+              <p className="text-sm opacity-80">{photos[currentIndex].date}</p>
             </div>
           </div>
+
+          {/* Navigation Arrows */}
+          <button 
+            onClick={prevSlide}
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-blue-800 p-2 rounded-full shadow-lg transition-all"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+          
+          <button 
+            onClick={nextSlide}
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-blue-800 p-2 rounded-full shadow-lg transition-all"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+
+          {/* Play/Pause Button */}
+          <button
+            onClick={togglePlayPause}
+            className="absolute top-4 right-4 bg-white/80 hover:bg-white text-blue-800 p-2 rounded-full shadow-lg transition-all"
+          >
+            {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+          </button>
+
+          {/* Navigation Dots */}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+            {photos.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  index === currentIndex 
+                    ? 'bg-white w-4' 
+                    : 'bg-white/50 hover:bg-white/75'
+                }`}
+              />
+            ))}
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
