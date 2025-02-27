@@ -172,12 +172,12 @@ const HomeContent = ({ timeLeft, names }) => {
     {
       icon: <Calendar className="w-6 h-6 text-blue-800" />,
       label: "Wedding Date",
-      value: "October 26, 2025"
+      value: "February 27, 2025"
     },
     {
       icon: <Clock className="w-6 h-6 text-blue-800" />,
       label: "Ceremony Time",
-      value: "4:00 PM"
+      value: "7:30 PM"
     },
     {
       icon: <Gift className="w-6 h-6 text-blue-800" />,
@@ -227,11 +227,7 @@ const ScheduleContent = () => {
     <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-6 border-2 border-blue-200">
       <h2 className="text-2xl text-blue-800 mb-6 font-bold">Wedding Day Schedule</h2>
       <div className="space-y-4">
-        <TimelineItem time="4:00 PM" event="Ceremony Begins" />
-        <TimelineItem time="5:00 PM" event="Cocktail Hour" />
-        <TimelineItem time="6:00 PM" event="Reception" />
-        <TimelineItem time="7:00 PM" event="Dinner Service" />
-        <TimelineItem time="8:00 PM" event="First Dance" />
+        <TimelineItem time="7:30 PM" event="Ceremony Begins" />
       </div>
     </div>
   );
