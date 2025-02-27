@@ -269,7 +269,7 @@ export default function WeddingCountdown() {
     seconds: 0
   });
 
-  const weddingDate = new Date('2025-10-26T16:00:00');
+  const weddingDate = new Date('2025-06-12T19:30:00');
   const names = {
     partner1: "Noah",
     partner2: "Ramsey"
