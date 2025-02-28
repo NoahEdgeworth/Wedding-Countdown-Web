@@ -172,7 +172,7 @@ const HomeContent = ({ timeLeft, names }) => {
     {
       icon: <Calendar className="w-6 h-6 text-blue-800" />,
       label: "Wedding Date",
-      value: "February 27, 2025"
+      value: "June 12, 2025"
     },
     {
       icon: <Clock className="w-6 h-6 text-blue-800" />,
